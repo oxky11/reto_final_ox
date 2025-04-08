@@ -4,10 +4,10 @@ from app.config import config_dict
 
 db = SQLAlchemy()
 
-
 def create_app(config_name):
     app = Flask(__name__)
     app.config.from_object(config_dict[config_name])
+    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///database.db"
 
     # Initialize the database
     db.init_app(app)
