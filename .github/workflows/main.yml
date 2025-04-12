@@ -17,4 +17,4 @@ jobs:
             python-version: 3.8
       - name: Run tests
         run: |
-            python -m unittest ./app/tests/tests.py
+            python ./app/tests/tests.py
