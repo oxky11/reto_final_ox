@@ -117,13 +117,17 @@ pipeline {
 				docker push ${ecrImage}
             '''
           } else {
+			echo repoName;
             // Si es Windows, usa PowerShell
-            powershell '''
-				aws ecr get-login-password --region '${region}' | docker login --username AWS --password-stdin '${accountId}'.dkr.ecr.'${region}'.amazonaws.com
+				powershell """
+				\$Env:AWS_ACCESS_KEY_ID = '${AWS_ACCESS_KEY_ID}'
+				\$Env:AWS_SECRET_ACCESS_KEY = '${AWS_SECRET_ACCESS_KEY}'
 
-				docker tag miapp:latest '${ecrImage}'
-				docker push '${ecrImage}'
-            '''
+				aws ecr get-login-password --region ${region} | docker login --username AWS --password-stdin ${accountId}.dkr.ecr.${region}.amazonaws.com
+
+				docker tag miapp:latest ${ecrImage}
+				docker push ${ecrImage}
+				"""
           }
 		}
       }
