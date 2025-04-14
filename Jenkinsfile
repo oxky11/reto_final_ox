@@ -98,7 +98,34 @@ pipeline {
     }
     stage('Registry') {
       steps {
-        echo 'Hello World'
+        script 
+		{
+		    def region = 'eu-west-1'
+            def accountId = '047719634914'
+            def repoName = 'reto_final_ox'
+            def imageTag = "${env.BUILD_NUMBER}"
+
+            def ecrImage = "${accountId}.dkr.ecr.${region}.amazonaws.com/${repoName}:${imageTag}"
+
+			if (isUnix()) {
+            // Si es Linux/Unix, usa sh
+            sh '''
+            #!/bin/bash
+				aws ecr get-login-password --region ${region} | docker login --username AWS --password-stdin ${accountId}.dkr.ecr.${region}.amazonaws.com
+
+				docker tag miapp:latest ${ecrImage}
+				docker push ${ecrImage}
+            '''
+          } else {
+            // Si es Windows, usa PowerShell
+            powershell '''
+				aws ecr get-login-password --region ${region} | docker login --username AWS --password-stdin ${accountId}.dkr.ecr.${region}.amazonaws.com
+
+				docker tag miapp:latest ${ecrImage}
+				docker push ${ecrImage}
+            '''
+          }
+		}
       }
     }
   }
