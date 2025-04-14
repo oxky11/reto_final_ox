@@ -124,7 +124,11 @@ pipeline {
           } else {
             // Si es Windows, usa PowerShell
 				powershell """
-				echo ${repoName}
+
+				\$Env:AWS_ACCESS_KEY_ID = '${AWS_ACCESS_KEY_ID}'
+				\$Env:AWS_SECRET_ACCESS_KEY = '${AWS_SECRET_ACCESS_KEY}'
+				
+				
 				aws ecr get-login-password --region ${region} | docker login --username AWS --password-stdin ${accountId}.dkr.ecr.${region}.amazonaws.com
 				docker build -t reto_final_ox .
 				docker tag reto_final_ox:latest ${ecrImage}
