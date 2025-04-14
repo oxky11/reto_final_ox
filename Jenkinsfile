@@ -113,7 +113,7 @@ pipeline {
             #!/bin/bash
 				aws ecr get-login-password --region ${region} | docker login --username AWS --password-stdin ${accountId}.dkr.ecr.${region}.amazonaws.com
 
-				docker tag miapp:latest ${ecrImage}
+				docker tag reto_final_ox:latest ${ecrImage}
 				docker push ${ecrImage}
             '''
           } else {
@@ -122,7 +122,7 @@ pipeline {
 				echo ${repoName}
 				aws ecr get-login-password --region ${region} | docker login --username AWS --password-stdin ${accountId}.dkr.ecr.${region}.amazonaws.com
 
-				docker tag miapp:latest ${ecrImage}
+				docker tag reto_final_ox:latest ${ecrImage}
 				docker push ${ecrImage}
 				"""
           }
