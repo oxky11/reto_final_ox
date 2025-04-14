@@ -112,7 +112,7 @@ pipeline {
             sh '''
             #!/bin/bash
 				aws ecr get-login-password --region ${region} | docker login --username AWS --password-stdin ${accountId}.dkr.ecr.${region}.amazonaws.com
-
+				docker build -t reto_final_ox .
 				docker tag reto_final_ox:latest ${ecrImage}
 				docker push ${ecrImage}
             '''
@@ -121,7 +121,7 @@ pipeline {
 				powershell """
 				echo ${repoName}
 				aws ecr get-login-password --region ${region} | docker login --username AWS --password-stdin ${accountId}.dkr.ecr.${region}.amazonaws.com
-
+				docker build -t reto_final_ox .
 				docker tag reto_final_ox:latest ${ecrImage}
 				docker push ${ecrImage}
 				"""
