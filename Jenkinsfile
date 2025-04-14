@@ -107,6 +107,11 @@ pipeline {
 
             def ecrImage = "${accountId}.dkr.ecr.${region}.amazonaws.com/${repoName}:${imageTag}"
 
+			
+			withCredentials([
+				string(credentialsId: 'aws-access-key-id', variable: 'AWS_ACCESS_KEY_ID'),
+				string(credentialsId: 'aws-secret-access-key', variable: 'AWS_SECRET_ACCESS_KEY')
+			]) {
 			if (isUnix()) {
             // Si es Linux/Unix, usa sh
             sh '''
@@ -126,6 +131,7 @@ pipeline {
 				docker push ${ecrImage}
 				"""
           }
+        }
 		}
       }
     }
