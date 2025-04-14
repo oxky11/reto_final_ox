@@ -100,7 +100,7 @@ pipeline {
       steps {
         script 
 		{
-		    def region = 'eu-west-1'
+		    def region = 'eu-south-2'
             def accountId = '047719634914'
             def repoName = 'reto_final_ox'
             def imageTag = "${env.BUILD_NUMBER}"
