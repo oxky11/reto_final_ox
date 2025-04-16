@@ -104,7 +104,7 @@ pipeline {
             def accountId = '047719634914'
             def repoName = 'reto_final_ox'
             def imageTag = "${env.BUILD_NUMBER}"
-
+			def ecrUrl = "${accountId}.dkr.ecr.${region}.amazonaws.com"
             def ecrImage = "${accountId}.dkr.ecr.${region}.amazonaws.com/${repoName}:${imageTag}"
 			
 			if (isUnix()) {
@@ -120,7 +120,7 @@ pipeline {
             // Si es Windows, usa PowerShell
 				powershell """
 				aws sts get-caller-identity
-				aws ecr get-login-password --region ${region} | docker login --username AWS --password-stdin ${accountId}.dkr.ecr.${region}.amazonaws.com
+				aws ecr get-login-password --region ${region} | docker login --username AWS --password-stdin ${ecrUrl}
 				echo "Docker login status: $?"
 				docker build -t reto_final_ox .
 				docker tag reto_final_ox:latest ${ecrImage}
