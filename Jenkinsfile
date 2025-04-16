@@ -119,8 +119,9 @@ pipeline {
           } else {
             // Si es Windows, usa PowerShell
 				powershell """
-				echo "Hola1"
+				aws sts get-caller-identity
 				aws ecr get-login-password --region ${region} | docker login --username AWS --password-stdin ${accountId}.dkr.ecr.${region}.amazonaws.com
+				echo "Docker login status: $?"
 				docker build -t reto_final_ox .
 				docker tag reto_final_ox:latest ${ecrImage}
 				echo "Hola2"
