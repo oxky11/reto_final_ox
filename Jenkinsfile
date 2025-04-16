@@ -119,8 +119,9 @@ pipeline {
           } else {
             // Si es Windows, usa PowerShell
 				powershell """
+				\$ecrUrl = ${ecrUrl}
 				aws sts get-caller-identity
-				aws ecr get-login-password --region ${region} | docker login --username AWS --password-stdin ${ecrUrl}
+				aws ecr get-login-password --region ${region} | docker login --username AWS --password-stdin \$ecrUrl
 				echo "Docker login status: $?"
 				docker build -t reto_final_ox .
 				docker tag reto_final_ox:latest ${ecrImage}
