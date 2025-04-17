@@ -133,12 +133,9 @@ pipeline {
 		stage('Vagrant') {
             steps {
                 script {
-           
                     if (isUnix()) {
                         sh """
-							vagrantStatus=$(vagrant status | grep -i "running")
-
-							if [ -n "$vagrantStatus" ]; then
+							if [ -n vagrant status | grep -i "running" ]; then
 								vagrant up
 							else
 								vagrant reload
