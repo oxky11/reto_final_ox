@@ -1,0 +1,33 @@
+---
+- name: Desplegar app con Docker
+  hosts: servidores
+  become: true
+
+  tasks:
+    - name: Instalar Docker (si no está)
+      apt:
+        name: docker.io
+        state: present
+        update_cache: yes
+      when: ansible_os_family == 'Debian'
+
+    - name: Iniciar servicio Docker
+      service:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Login en ECR
+      shell: |
+        aws ecr get-login-password --region eu-south-2 | docker login --username AWS --password-stdin 047719634914.dkr.ecr.eu-south-2.amazonaws.com
+      environment:
+        AWS_ACCESS_KEY_ID: "{{ lookup('env', 'AWS_ACCESS_KEY_ID') }}"
+        AWS_SECRET_ACCESS_KEY: "{{ lookup('env', 'AWS_SECRET_ACCESS_KEY') }}"
+
+    - name: Descargar imagen desde ECR
+      shell: |
+        docker pull 047719634914.dkr.ecr.eu-south-2.amazonaws.com/reto_final_ox:latest
+
+    - name: Ejecutar contenedor
+      shell: |
+        docker run -d -p 5000:5000 --name reto_final_ox_app 047719634914.dkr.ecr.eu-south-2.amazonaws.com/reto_final_ox:latest
