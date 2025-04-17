@@ -105,6 +105,7 @@ pipeline {
             steps {
                 script {
                     
+                    def ecrUrl = "${env.accountId}.dkr.ecr.${env.AWS_DEFAULT_REGION}.amazonaws.com"
                     def ecrImage = "${ecrUrl}/${env.repoName}:${env.BUILD_NUMBER}"
             
             
@@ -119,7 +120,7 @@ pipeline {
                     } else {
                         bat script:  """
                             aws sts get-caller-identity
-                            aws ecr get-login-password --region %AWS_DEFAULT_REGION% | docker login --username AWS --password-stdin %ECR_URL%
+                            aws ecr get-login-password --region %AWS_DEFAULT_REGION% | docker login --username AWS --password-stdin ${ecrUrl}
                             docker build -t reto_final_ox .
                             docker tag reto_final_ox:latest ${env.ecrImage}
                             docker push ${env.ecrImage}
@@ -134,6 +135,7 @@ pipeline {
                 script {
                     if (isUnix()) {
                         sh """
+
 							if [ -n vagrant status | grep -i "running" ]; then
 								vagrant up
 							else
