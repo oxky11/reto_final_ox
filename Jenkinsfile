@@ -135,14 +135,14 @@ pipeline {
                 script {
                     if (isUnix()) {
                         def status = sh(script: 'vagrant status', returnStdout: true).trim()
-                        if (output.toLowerCase().contains("running")) {
+                        if (status.toLowerCase().contains("running")) {
                             sh 'vagrant reload'
                         } else {
                             sh 'vagrant up'
                         }
                     } else {
                         def status = bat(script: 'vagrant status', returnStdout: true).trim()
-                        if (output.toLowerCase().contains("running")) {
+                        if (status.toLowerCase().contains("running")) {
                             bat 'vagrant reload'
                         } else {
                             bat 'vagrant up'
