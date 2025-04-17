@@ -144,9 +144,7 @@ pipeline {
                         """
                     } else {
                         bat script:  """
-							$vagrantStatus = vagrant status | Select-String -Pattern "running"
-
-							if ($vagrantStatus) {
+							if (vagrant status | Select-String -Pattern "running") {
 								vagrant up
 							} else {
 								vagrant reload
