@@ -142,6 +142,7 @@ pipeline {
                         }
                     } else {
                         def status = bat(script: 'vagrant status', returnStdout: true).trim()
+						echo status
                         if (status.toLowerCase().contains("running")) {
                             bat 'vagrant reload'
                         } else {
