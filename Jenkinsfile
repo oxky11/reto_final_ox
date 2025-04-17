@@ -133,29 +133,23 @@ pipeline {
 		stage('Vagrant') {
             steps {
                 script {
-
                     if (isUnix()) {
-						def status = sh(script: 'vagrant status', returnStdout: true).trim()
-                        sh """
-							if (status.contains("running")) {
-								vagrant reload
-							} else {
-								vagrant up
-							}
-                        """
+                        def status = sh(script: 'vagrant status', returnStdout: true).trim()
+                        if (status.contains("running")) {
+                            sh 'vagrant reload'
+                        } else {
+                            sh 'vagrant up'
+                        }
                     } else {
-						def status = bat(script: 'vagrant status', returnStdout: true).trim()
-                        powershell """
-							if (status.contains("running")) {
-								vagrant reload
-							} else {
-								vagrant up
-							}
-                        """
+                        def status = bat(script: 'vagrant status', returnStdout: true).trim()
+                        if (status.contains("running")) {
+                            bat 'vagrant reload'
+                        } else {
+                            bat 'vagrant up'
+                        }
                     }
                 }
             }
         }
-		
     }
 }
