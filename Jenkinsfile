@@ -129,5 +129,25 @@ pipeline {
                 }
             }
         }
+		
+		stage('Vagrant') {
+            steps {
+                script {
+           
+                    if (isUnix()) {
+                        sh """
+                            vagrant up | true
+							vagrant reload
+                        """
+                    } else {
+                        bat script:  """
+                            vagrant up | true
+							vagrant reload
+                         """
+                    }
+                }
+            }
+        }
+		
     }
 }
