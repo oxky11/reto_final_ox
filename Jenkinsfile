@@ -143,7 +143,8 @@ pipeline {
 							fi
                         """
                     } else {
-                        bat script:  """
+                        powershell """
+							$status = vagrant status
 							if (vagrant status | Select-String -Pattern "running") {
 								vagrant up
 							} else {
