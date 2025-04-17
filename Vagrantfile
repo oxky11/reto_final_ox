@@ -16,6 +16,4 @@ Vagrant.configure("2") do |config|
 	cd /vagrant/ansible
 	ansible-playbook -i inventory.ini playbook.yml
 	SHELL
-	
-  
 end

@@ -136,14 +136,24 @@ pipeline {
            
                     if (isUnix()) {
                         sh """
-                            vagrant up | true
-							vagrant reload
+							vagrantStatus=$(vagrant status | grep -i "running")
+
+							if [ -n "$vagrantStatus" ]; then
+								vagrant up
+							else
+								vagrant reload
+							fi
                         """
                     } else {
                         bat script:  """
-                            vagrant up | true
-							vagrant reload
-                         """
+							$vagrantStatus = vagrant status | Select-String -Pattern "running"
+
+							if ($vagrantStatus) {
+								vagrant up
+							} else {
+								vagrant reload
+							}
+                        """
                     }
                 }
             }
