@@ -10,6 +10,7 @@ Vagrant.configure("2") do |config|
 	sudo apt-get install -y ansible python3-pip docker.io
 	chmod -x /vagrant/ansible/inventory.ini
 	cd /vagrant/ansible
-	ansible-playbook -i inventory.ini playbook.yml
+	ansible-inventory -i inventory.ini --yaml
+	ansible-playbook -i inventory.ini playbook.yml 
 	SHELL
 end
