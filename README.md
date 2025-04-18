@@ -1,5 +1,4 @@
-# reto_final_ox
-Reto Final Oscar Llopis Herrero
+# Reto Final Oscar Llopis Herrero
 
 # Gestor de ramas.
 Para realizar modificaciones en la rama, lo primero que haremos será en JIRA (<Dirección del JIRA>) tomar un ticket del sprint que esté en To-Do. Nos quedaremos con el código o nombre del ticket. 
@@ -39,8 +38,16 @@ docker-compose build
 docker-compose up -d 
 ```
 
-# Hacer peticiones en CMD
+#3 Hacer peticiones en CMD
 
 ```
 $ curl -GET 127.0.0.1:5000/data
+```
+
+## Ejecución de tests
+
+En la carpeta raiz podemos ejecutar un shell ejecutando este comando
+
+```
+python -m unittest ./app/tests/tests.py
 ```
