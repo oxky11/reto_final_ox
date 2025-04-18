@@ -8,8 +8,8 @@ Vagrant.configure("2") do |config|
   config.vm.provision "shell", run: "always", inline: <<-SHELL
 	sudo apt-get update
 	sudo apt-get install -y ansible python3-pip docker.io
-	chmod -x /vagrant/ansible/inventory
 	cd /vagrant/ansible
+	sudo chmod -x inventory
 	ansible-playbook  playbook.yml -i inventory
 	SHELL
 end
