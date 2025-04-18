@@ -156,5 +156,19 @@ pipeline {
 				}
             }
         }
+		
+		stage('Borrar Imagenes Docker del local')
+		{
+			steps {
+					script {
+						if (isUnix()) {
+							sh 'docker images | grep reto_final_ox | awk '{print $3}' | xargs docker rmi -f'
+						} else {
+							bat 'docker images | grep reto_final_ox | awk '{print $3}' | xargs docker rmi -f'
+						}
+					}
+			
+			}
+		}
     }
 }
