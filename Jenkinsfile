@@ -163,11 +163,16 @@ pipeline {
 					script {
 					def ecrImage = "${ecrUrl}/${env.repoName}:${env.BUILD_NUMBER}"
 						if (isUnix()) {
-							sh 'docker rmi ${env.ecrImage}'
-							sh 'docker rmi ${repoName}:latest'
+						    sh """
+                            	docker rmi ${env.ecrImage}
+								docker rmi ${repoName}:latest
+								"""
 						} else {
-							bat 'docker rmi ${env.ecrImage}'
-							bat 'docker rmi ${repoName}:latest'
+						    bat script:  """
+                            	docker rmi ${env.ecrImage}
+								docker rmi ${repoName}:latest
+								"""
+
 						}
 					}
 			
