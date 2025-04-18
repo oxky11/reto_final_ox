@@ -113,16 +113,16 @@ pipeline {
                         sh """
                             aws sts get-caller-identity
                             aws ecr get-login-password --region ${env.AWS_DEFAULT_REGION} | docker login --username AWS --password-stdin ${ecrUrl}
-                            docker build -t reto_final_ox .
-                            docker tag reto_final_ox:latest ${ecrImage}
+                            docker build -t ${repoName} .
+                            docker tag ${repoName}:latest ${ecrImage}
                             docker push ${ecrImage}
                         """
                     } else {
                         bat script:  """
                             aws sts get-caller-identity
                             aws ecr get-login-password --region %AWS_DEFAULT_REGION% | docker login --username AWS --password-stdin ${ecrUrl}
-                            docker build -t reto_final_ox .
-                            docker tag reto_final_ox:latest ${env.ecrImage}
+                            docker build -t ${repoName} .
+                            docker tag ${repoName}:latest ${env.ecrImage}
                             docker push ${env.ecrImage}
                          """
                     }
@@ -161,10 +161,13 @@ pipeline {
 		{
 			steps {
 					script {
+					def ecrImage = "${ecrUrl}/${env.repoName}:${env.BUILD_NUMBER}"
 						if (isUnix()) {
-							sh 'docker images | grep reto_final_ox | awk '{print $3}' | xargs docker rmi -f'
+							sh 'docker rmi ${env.ecrImage}'
+							sh 'docker rmi ${repoName}:latest'
 						} else {
-							bat 'docker images | grep reto_final_ox | awk '{print $3}' | xargs docker rmi -f'
+							bat 'docker rmi ${env.ecrImage}'
+							bat 'docker rmi ${repoName}:latest'
 						}
 					}
 			
