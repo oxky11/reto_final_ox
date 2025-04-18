@@ -11,12 +11,9 @@ Vagrant.configure("2") do |config|
 	  cd /vagrant/ansible
 	  
 	  # Renombrar el archivo inventory y quitarle el permiso de ejecución
-	  mv inventory inventory.ini
-	  chmod -x inventory.ini
-	  
-	  # Ver los permisos para asegurarnos de que todo esté bien
-	  ls -l inventory.ini
-	  
+	  sudo mv inventory inventory.ini
+	  sudo chmod -x inventory.ini
+
 	  # Ejecutar el playbook
 	  ansible-playbook playbook.yml -i inventory.ini
 	SHELL
