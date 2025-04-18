@@ -27,7 +27,3 @@
     - name: Descargar imagen desde ECR
       shell: |
         docker pull 047719634914.dkr.ecr.eu-south-2.amazonaws.com/reto_final_ox:latest
-
-    - name: Ejecutar contenedor
-      shell: |
-        docker run -d -p 5000:5000 --name reto_final_ox_app 047719634914.dkr.ecr.eu-south-2.amazonaws.com/reto_final_ox:latest

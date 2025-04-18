@@ -6,11 +6,18 @@ Vagrant.configure("2") do |config|
   config.vm.synced_folder ".", "/vagrant", type: "virtualbox"
   
   config.vm.provision "shell", run: "always", inline: <<-SHELL
-	sudo apt-get update
-	sudo apt-get install -y ansible python3-pip docker.io
-	cd /vagrant/ansible
-	sudo chmod -x inventory
-	ls -l
-	ansible-playbook  playbook.yml -i inventory
+	  sudo apt-get update
+	  sudo apt-get install -y ansible python3-pip docker.io
+	  cd /vagrant/ansible
+	  
+	  # Renombrar el archivo inventory y quitarle el permiso de ejecución
+	  mv inventory inventory.ini
+	  chmod -x inventory.ini
+	  
+	  # Ver los permisos para asegurarnos de que todo esté bien
+	  ls -l inventory.ini
+	  
+	  # Ejecutar el playbook
+	  ansible-playbook playbook.yml -i inventory.ini
 	SHELL
 end
