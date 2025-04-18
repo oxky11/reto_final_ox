@@ -8,7 +8,7 @@ class TestDataRoutes(unittest.TestCase):
 
     def setUp(self):
         """Configuración antes de cada test."""
-        self.app = create_app("development")
+        self.app = create_app("testing")
         self.client = self.app.test_client()
         self.app.testing = True
 
