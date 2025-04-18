@@ -38,7 +38,7 @@ docker-compose build
 docker-compose up -d 
 ```
 
-#3 Hacer peticiones en CMD
+## Hacer peticiones en CMD
 
 ```
 $ curl -GET 127.0.0.1:5000/data
