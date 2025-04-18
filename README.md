@@ -30,8 +30,17 @@ git checkout [nombre-rama]
 
 # Arranque del proyecto
 
-En nuestro IDE escribiremos:
+En nuestro IDE podemos arrancar el proyecto , o podemos hacerlo mediante Docker.
+
+Siendo Docker realizamos los siguientes pasos:
 
 ```
+docker-compose build
+docker-compose up -d 
+```
 
+# Hacer peticiones en CMD
+
+```
+$ curl -GET 127.0.0.1:5000/data
 ```
