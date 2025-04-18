@@ -161,16 +161,17 @@ pipeline {
 		{
 			steps {
 					script {
+					def ecrUrl = "${env.accountId}.dkr.ecr.${env.AWS_DEFAULT_REGION}.amazonaws.com"
 					def ecrImage = "${ecrUrl}/${env.repoName}:${env.BUILD_NUMBER}"
 						if (isUnix()) {
 						    sh """
                             	docker rmi ${env.ecrImage}
-								docker rmi ${repoName}:latest
+								docker rmi ${env.repoName}:latest
 								"""
 						} else {
 						    bat script:  """
                             	docker rmi ${env.ecrImage}
-								docker rmi ${repoName}:latest
+								docker rmi ${env.repoName}:latest
 								"""
 
 						}
