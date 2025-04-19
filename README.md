@@ -51,3 +51,5 @@ En la carpeta raiz podemos ejecutar un shell ejecutando este comando
 ```
 python -m unittest ./app/tests/tests.py
 ```
+
+2025-04-19
