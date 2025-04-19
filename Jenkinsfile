@@ -138,18 +138,26 @@ pipeline {
 							def status = sh(script: 'vagrant status', returnStdout: true).trim()
 							if (status.toLowerCase().contains("running")) {
 								sh 'vagrant halt'
-								sh 'vagrant reload'
+								sh 'ECR_URL="$ecr_url" DOCKER_TAG="$tag" vagrant up vagrant reload'
 							} else {
-								sh 'vagrant up'
+								sh 'ECR_URL="$ecr_url" DOCKER_TAG="$tag" vagrant up'
 							}
 						} else {
 							def status = bat(script: 'vagrant status', returnStdout: true).trim()
 							echo status
 							if (status.toLowerCase().contains("running")) {
-								bat 'vagrant halt'
-								bat 'vagrant reload'
+								bat '''
+										vagrant halt
+								        set ECR_URL=%ECR_URL%
+										set DOCKER_TAG=%DOCKER_TAG%
+										vagrant reload
+								'''
 							} else {
-								bat 'vagrant up'
+								bat '''
+								        set ECR_URL=%ECR_URL%
+										set DOCKER_TAG=%DOCKER_TAG%
+										vagrant up
+								'''
 							}
 						}
 					}
