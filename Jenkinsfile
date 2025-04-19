@@ -5,9 +5,9 @@ pipeline {
         AWS_ACCESS_KEY_ID     = credentials('aws-access-key-id')
         AWS_SECRET_ACCESS_KEY = credentials('aws-secret-access-key')
         AWS_DEFAULT_REGION  = 'eu-south-2'
-        accountId = '047719634914'
+        accountId = credentials('account-id')
         repoName = 'reto_final_ox'
-        imageTag = "${env.BUILD_NUMBER}"
+		tag = "${repoName}:latest"
         ECR_URL = "${accountId}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com"
         ecrImage = "${accountId}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${repoName}:latest"
     }
