@@ -149,13 +149,13 @@ pipeline {
 								bat '''
 										vagrant halt
 								        set ECR_URL=%ECR_URL%
-										set DOCKER_TAG=%DOCKER_TAG%
+										set TAG=%TAG%
 										vagrant reload
 								'''
 							} else {
 								bat '''
 								        set ECR_URL=%ECR_URL%
-										set DOCKER_TAG=%DOCKER_TAG%
+										set TAG=%TAG%
 										vagrant up
 								'''
 							}
